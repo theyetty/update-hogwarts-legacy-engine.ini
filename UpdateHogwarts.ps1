@@ -26,6 +26,11 @@ if ($poolSize -lt 0 -or !$poolSize) {
     $poolSize = 2048
 }
 
+# More than 6GB for a texture pool is too much even on a 4090 
+if ($poolSize -gt 6144) {
+    $poolSize = 6144
+}
+
 # Add the value for r.Streaming.PoolSize to the expectedVariables list
 $expectedVariables += "r.Streaming.PoolSize=$poolSize"
 
