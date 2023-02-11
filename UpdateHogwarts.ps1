@@ -459,7 +459,11 @@ function Main() {
         $ini[$systemSection][$name] = $value
     }
 
-    Remove-item $configFile
+    # Backup original config and delete the original
+    Copy-Item $configFile -Destination "$configFile.bak"
+    Write-Output "Copied original config to the file $configFile.bak"
+    Remove-Item $configFile
+
     # Write the updated ini file
     $ini | Out-IniFile -FilePath $configFile
 
