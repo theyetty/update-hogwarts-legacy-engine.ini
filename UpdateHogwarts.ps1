@@ -423,10 +423,10 @@ function Main() {
     }
 
     # Get the users VRAM avaliable in kilobytes
-    $vram = (Get-ItemProperty -Path "HKLM:\SYSTEM\ControlSet001\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0*" -Name HardwareInformation.qwMemorySize -ErrorAction SilentlyContinue)."HardwareInformation.qwMemorySize"
+    $vram = (Get-ItemProperty -Path "HKLM:\SYSTEM\ControlSet001\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0*" -Name HardwareInformation.qwMemorySize -ErrorAction SilentlyContinue)."HardwareInformation.qwMemorySize" | Measure-Object -Maximum
 
     # Calculate  the amount of VRAM they can use
-    $poolSize = [math]::Round($vram / 1MB / 2)
+    $poolSize = [math]::Round($vram.Maximum / 1MB / 2)
 
     # Check if $poolSize is less than 0 or not defined, just incase the above returns null 
     if ($poolSize -lt 0 -or !$poolSize) {
