@@ -1,4 +1,4 @@
-# The 2 fuinctions for INI files below is 1:1 copied from http://lipkau.net/PsIni/ version 3.0.1
+# The 2 functions for INI files below is 1:1 copied from http://lipkau.net/PsIni/ version 3.0.1
 Function Out-IniFile {
     <#
     .Synopsis
