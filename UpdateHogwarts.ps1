@@ -429,8 +429,13 @@ function Main() {
     $poolSize = [math]::Round($vram / 1MB / 2)
 
     # Check if $poolSize is less than 0 or not defined, just incase the above returns null 
-    if ($poolSize -lt 0 -or !$poolSize) { 
-        $poolSize = 2048 
+    if ($poolSize -lt 0 -or !$poolSize) {
+        $poolSize = 2048
+    }
+
+    # More than 6GB for a texture pool is too much even on a 4090  
+    if ($poolSize -gt 6144) {
+        $poolSize = 6144
     }
 
     # Add the value for r.Streaming.PoolSize to the expectedVariables list
