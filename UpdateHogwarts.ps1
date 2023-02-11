@@ -428,6 +428,11 @@ function Main() {
     # Calculate  the amount of VRAM they can use
     $poolSize = [math]::Round($vram / 1MB / 2)
 
+    # Check if $poolSize is less than 0 or not defined, just incase the above returns null 
+    if ($poolSize -lt 0 -or !$poolSize) { 
+        $poolSize = 2048 
+    }
+
     # Add the value for r.Streaming.PoolSize to the expectedVariables list
     $expectedVariables += , @("r.Streaming.PoolSize", "$poolSize")
 
