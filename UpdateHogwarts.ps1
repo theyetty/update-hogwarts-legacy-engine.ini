@@ -19,7 +19,7 @@ if (!(Test-Path $configFile)) {
 $vram = Get-WmiObject Win32_VideoController | Select-Object -ExpandProperty AdapterRAM
 
 # Calculate  the amount of VRAM they can use
-$poolSize = [math]::Round($vram / 1MB)
+$poolSize = [math]::Round($vram / 1MB / 2)
 
 # Add the value for r.Streaming.PoolSize to the expectedVariables list
 $expectedVariables += "r.Streaming.PoolSize=$poolSize"
