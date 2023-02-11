@@ -16,10 +16,15 @@ if (!(Test-Path $configFile)) {
 }
 
 # Get the users VRAM avaliable in kilobytes
-$vram = Get-WmiObject Win32_VideoController | Select-Object -ExpandProperty AdapterRAM
+$vram = (Get-ItemProperty -Path "HKLM:\SYSTEM\ControlSet001\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0*" -Name HardwareInformation.qwMemorySize -ErrorAction SilentlyContinue)."HardwareInformation.qwMemorySize"
 
 # Calculate  the amount of VRAM they can use
 $poolSize = [math]::Round($vram / 1MB / 2)
+
+# Check if $poolSize is less than 0 or not defined, just incase the above returns null
+if ($poolSize -lt 0 -or !$poolSize) {
+    $poolSize = 2048
+}
 
 # Add the value for r.Streaming.PoolSize to the expectedVariables list
 $expectedVariables += "r.Streaming.PoolSize=$poolSize"
